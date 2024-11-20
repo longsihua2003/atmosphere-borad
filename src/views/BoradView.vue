@@ -1,0 +1,213 @@
+<script setup>
+import { BorderBox7 as DvBorderBox7 } from '@kjgl77/datav-vue3';
+import BoradTable from '@/components/BoradTable.vue';
+import LineEchart from '@/components/LineEchart.vue';
+import TempandHumChart from '@/components/TempandHumChart.vue';
+import ThreeConditionsChart from '@/components/ThreeConditionsChart.vue';
+import WindChart from '@/components/WindChart.vue';
+import PMChart from '@/components/PMChart.vue';
+import RainChart from '@/components/RainChart.vue';
+import VLChart from '@/components/VLChart.vue';
+import CVChart from '@/components/CVChart.vue';
+import SWPChart from '@/components/SWPChart.vue';
+
+import {
+  getData,
+  handleData,
+  TempandHum,
+  ThreeConditions,
+  WindSpeedandDirection,
+  PM,
+  Rainfall,
+  VisibilityandLightIntensity,
+  CurrentandVoltage,
+  SolarWindPressure,
+} from '@/api/data';
+import { ref, watch } from 'vue';
+
+const TH = ref([]);
+const THB = ref(false);
+const THREE = ref([]);
+const THREEB = ref(false);
+const WSD = ref([]);
+const WSDB = ref(false);
+const PMT = ref([]);
+const PMTB = ref(false);
+const Rain = ref([]);
+const RainB = ref(false);
+const VL = ref([]);
+const VLB = ref(false);
+const CV = ref([]);
+const CVB = ref(false);
+const SWP = ref([]);
+const SWPB = ref(false);
+
+const ButtenList = [
+  { name: '温、湿度', value: 'THB' },
+  { name: '结冰、水膜、积雪', value: 'THREEB' },
+  { name: '风速、风向', value: 'WSDB' },
+  { name: 'PM情况', value: 'PMTB' },
+  { name: '雨量、雨强', value: 'RainB' },
+  { name: '能见度、光强', value: 'VLB' },
+  { name: '电流、电压', value: 'CVB' },
+  { name: '光电、风电、压电', value: 'SWPB' },
+];
+const tableData = ref(null);
+function setDate(start_time = null, end_time = null) {
+  getData(start_time, end_time).then((res) => {
+    tableData.value = res.result.list;
+    handleData(res.result.list);
+    TH.value = TempandHum;
+    THREE.value = ThreeConditions;
+    WSD.value = WindSpeedandDirection;
+    PMT.value = PM;
+    Rain.value = Rainfall;
+    VL.value = VisibilityandLightIntensity;
+    CV.value = CurrentandVoltage;
+    SWP.value = SolarWindPressure;
+    if (currentButten.value) {
+      clickButten(currentButten.value);
+    }
+  });
+}
+setDate();
+// function clickButten(value) {
+//   ButtenList.forEach((item) => {
+//     console.log(item, value);
+//     if (item.value === value) {
+//       console.log(item.value);
+//       eval(`${item.value} = !${item.value}`);
+//     } else {
+//       eval(`${item.value} = false`);
+//     }
+//   });
+// }
+const currentButten = ref(null);
+const hasCharts = computed(() => {
+  return THB.value || THREEB.value || WSDB.value || PMTB.value || RainB.value || VLB.value || CVB.value || SWPB.value;
+});
+
+function clickButten(value) {
+  // 如果点击的是当前的按钮，直接返回
+  currentButten.value = value;
+  ButtenList.forEach((item) => {
+    // 直接修改响应式数据
+    if (item.value === value) {
+      // 切换对应的布尔值
+      item.value === 'THB' && (THB.value = !THB.value);
+      item.value === 'THREEB' && (THREEB.value = !THREEB.value);
+      item.value === 'WSDB' && (WSDB.value = !WSDB.value);
+      item.value === 'PMTB' && (PMTB.value = !PMTB.value);
+      item.value === 'RainB' && (RainB.value = !RainB.value);
+      item.value === 'VLB' && (VLB.value = !VLB.value);
+      item.value === 'CVB' && (CVB.value = !CVB.value);
+      item.value === 'SWPB' && (SWPB.value = !SWPB.value);
+    } else {
+      // 隐藏其他的
+      item.value === 'THB' && (THB.value = false);
+      item.value === 'THREEB' && (THREEB.value = false);
+      item.value === 'WSDB' && (WSDB.value = false);
+      item.value === 'PMTB' && (PMTB.value = false);
+      item.value === 'RainB' && (RainB.value = false);
+      item.value === 'VLB' && (VLB.value = false);
+      item.value === 'CVB' && (CVB.value = false);
+      item.value === 'SWPB' && (SWPB.value = false);
+    }
+  });
+}
+
+// 日期选择
+const select_data = ref(null);
+watch(select_data, (newVal) => {
+  let start_time = newVal[0];
+  let end_time = newVal[1];
+  start_time = new Date(start_time).getTime();
+  // 转换为字符串
+  start_time = start_time.toString();
+  end_time = new Date(end_time).getTime();
+  end_time = end_time.toString();
+  setDate(start_time, end_time);
+});
+</script>
+
+<template>
+  <div class="container">
+    <div class="table">
+      <div class="table-top">
+        <h1 class="text-3xl my-5">数据总览</h1>
+        <div class="block">
+          <el-date-picker
+            v-model="select_data"
+            type="datetimerange"
+            start-placeholder="Start date"
+            end-placeholder="End date"
+            format="YYYY-MM-DD HH:mm:ss"
+            date-format="YYYY/MM/DD ddd"
+            time-format="A hh:mm:ss"
+          />
+        </div>
+      </div>
+      <BoradTable :data="tableData"></BoradTable>
+    </div>
+    <div class="echarts-show">
+      <h1 class="text-3xl my-5">数据分析</h1>
+      <dv-border-box7>
+        <div class="echarts-container">
+          <div class="echarts-left">
+            <el-button v-for="(item, index) in ButtenList" :key="index" type="primary" @click="clickButten(item.value)">
+              {{ item.name }}
+            </el-button>
+          </div>
+          <div class="echarts-right">
+            <TempandHumChart v-if="THB" :data="TH"></TempandHumChart>
+            <ThreeConditionsChart v-if="THREEB" :data="THREE"></ThreeConditionsChart>
+            <WindChart v-if="WSDB" :data="WSD"></WindChart>
+            <PMChart v-if="PMTB" :data="PMT"></PMChart>
+            <RainChart v-if="RainB" :data="Rain"></RainChart>
+            <VLChart v-if="VLB" :data="VL"></VLChart>
+            <CVChart v-if="CVB" :data="CV"></CVChart>
+            <SWPChart v-if="SWPB" :data="SWP"></SWPChart>
+            <h1 v-if="!hasCharts">点击打开图表</h1>
+          </div>
+        </div>
+      </dv-border-box7>
+    </div>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.container {
+  @apply justify-center items-center flex-col;
+  @apply mx-20 h-full;
+  .table {
+    @apply w-full h-1/2;
+    display: contents;
+    .table-top {
+      @apply flex justify-between items-center;
+      @apply w-full;
+      .block {
+        @apply w-1/3;
+      }
+    }
+  }
+  .echarts-show {
+    @apply my-5;
+    .echarts-container {
+      @apply flex justify-start items-center;
+      @apply p-5;
+      .echarts-left {
+        @apply flex justify-start items-center flex-col overflow-y-auto max-h-300px overflow-x-hidden px-5;
+        :deep(.el-button) {
+          @apply m-0 my-3 mx-5 w-200px;
+        }
+      }
+      .echarts-right {
+        @apply w-full h-full pl-5 border-l-3;
+        @apply flex justify-center items-center;
+        width: 100% !important;
+        height: 300px !important;
+      }
+    }
+  }
+}
+</style>
