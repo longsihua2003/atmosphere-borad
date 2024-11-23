@@ -1,6 +1,6 @@
 <template>
   <div class="eltable-div">
-    <el-table v-loading="table_loading" :data="tableData" border class="border-table">
+    <el-table v-loading="table_loading" :data="tableData" border height="jj">
       <el-table-column fixed prop="create_time" label="时间" width="180" show-overflow-tooltip />
       <el-table-column prop="jiebin" label="结晶" width="120" />
       <el-table-column prop="shuimo" label="水膜" width="120" />
@@ -47,14 +47,11 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-.border-table {
-  @apply h-full overflow-y-auto;
-}
 .eltable-div {
-  @apply w-full;
+  @apply w-full h-full overflow-hidden;
 }
 .el-table {
-  // @apply overflow-y-auto;
+  @apply overflow-y-auto w-full h-full;
   :deep(th) {
     @apply bg-black;
   }

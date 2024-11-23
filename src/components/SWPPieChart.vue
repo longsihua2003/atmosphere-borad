@@ -9,7 +9,7 @@ import { onMounted } from 'vue';
 const props = defineProps({
   title: {
     type: String,
-    default: '温度湿度图表',
+    default: '光电、风电、压电',
   },
   data: {
     type: Array,
@@ -50,7 +50,7 @@ const chartsDom = ref(null);
 // 图表对象
 let mychart = null;
 
-const colors = ['#DE6E6A', '#5A6FC0'];
+const colors = ['#DE6E6A', '#F2CA6B', '#5A6FC0'];
 
 const option = {
   color: '#ffffff',
@@ -66,7 +66,7 @@ const option = {
     trigger: 'item',
   },
   legend: {
-    data: ['温度', '湿度'],
+    data: ['光电', '风电', '压电'],
     textStyle: {
       color: '#ffffff',
     },
@@ -105,17 +105,24 @@ onMounted(() => {
   mychart = echarts.init(chartsDom.value);
   option.series[0].data = [
     {
-      name: '温度',
+      name: '光电',
       value: 25,
       itemStyle: {
         color: colors[0],
       },
     },
     {
-      name: '湿度',
+      name: '风电',
       value: 50,
       itemStyle: {
         color: colors[1],
+      },
+    },
+    {
+      name: '压电',
+      value: 75,
+      itemStyle: {
+        color: colors[2],
       },
     },
   ];
@@ -161,17 +168,24 @@ watch(
     if (data_verification()) {
       option.series[0].data = [
         {
-          name: '温度',
-          value: newVal[0].wendu,
+          name: '光电',
+          value: newVal[0].guangdian,
           itemStyle: {
             color: colors[0],
           },
         },
         {
-          name: '湿度',
-          value: newVal[0].shidu,
+          name: '风电',
+          value: newVal[0].fengdian,
           itemStyle: {
             color: colors[1],
+          },
+        },
+        {
+          name: '压电',
+          value: newVal[0].yadian,
+          itemStyle: {
+            color: colors[2],
           },
         },
       ];

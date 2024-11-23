@@ -19,7 +19,7 @@ import HeaderTitle from '@/components/HeaderTitle.vue';
   }
 
   .content-main {
-    @apply h-[calc(100%-60px)];
+    @apply h-[calc(100%-70px)];
   }
 
   /* display: flex;

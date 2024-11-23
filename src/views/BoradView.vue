@@ -5,12 +5,14 @@ import LineEchart from '@/components/LineEchart.vue';
 import TempandHumChart from '@/components/TempandHumChart.vue';
 import THPieChart from '@/components/THPieChart.vue';
 import ThreeConditionsChart from '@/components/ThreeConditionsChart.vue';
+import ThreeCPieChart from '@/components/ThreeCPieChart.vue';
 import WindChart from '@/components/WindChart.vue';
 import PMChart from '@/components/PMChart.vue';
 import RainChart from '@/components/RainChart.vue';
 import VLChart from '@/components/VLChart.vue';
 import CVChart from '@/components/CVChart.vue';
 import SWPChart from '@/components/SWPChart.vue';
+import SWPPieChart from '@/components/SWPPieChart.vue';
 
 import {
   getData,
@@ -190,44 +192,43 @@ watch(select_data, (newVal) => {
 <template>
   <div class="container">
     <div class="table">
-      <div class="table-top">
-        <h1 class="text-3xl my-5">数据总览</h1>
-        <div class="block">
-          <el-date-picker
-            v-model="select_data"
-            type="datetimerange"
-            start-placeholder="Start date"
-            end-placeholder="End date"
-            format="YYYY-MM-DD HH:mm:ss"
-            date-format="YYYY/MM/DD ddd"
-            time-format="A hh:mm:ss"
-          />
-        </div>
+      <h1 class="text-3xl">数据总览</h1>
+      <div class="block">
+        <el-date-picker
+          v-model="select_data"
+          type="datetimerange"
+          start-placeholder="Start date"
+          end-placeholder="End date"
+          format="YYYY-MM-DD HH:mm:ss"
+          date-format="YYYY/MM/DD ddd"
+          time-format="A hh:mm:ss"
+        />
       </div>
       <BoradTable class="table-main" :data="tableData"></BoradTable>
-      <THPieChart :data="TH"></THPieChart>
     </div>
+    <THPieChart :data="TH"></THPieChart>
+    <SWPPieChart :data="SWP"></SWPPieChart>
+    <ThreeCPieChart :data="THREE"></ThreeCPieChart>
     <div class="echarts-show">
       <h1 class="text-3xl my-5">数据分析</h1>
       <dv-border-box7>
-        <div class="echarts-container">
-          <div class="echarts-left">
+        <!-- <div class="echarts-container"> -->
+        <!-- <div class="echarts-left">
             <el-button v-for="(item, index) in ButtenList" :key="index" type="primary" @click="clickButten(item.value)">
               {{ item.name }}
             </el-button>
-          </div>
-          <div class="echarts-right">
-            <TempandHumChart v-if="THB" :data="TH"></TempandHumChart>
-            <ThreeConditionsChart v-if="THREEB" :data="THREE"></ThreeConditionsChart>
-            <WindChart v-if="WSDB" :data="WSD"></WindChart>
-            <PMChart v-if="PMTB" :data="PMT"></PMChart>
-            <RainChart v-if="RainB" :data="Rain"></RainChart>
-            <VLChart v-if="VLB" :data="VL"></VLChart>
-            <CVChart v-if="CVB" :data="CV"></CVChart>
-            <SWPChart v-if="SWPB" :data="SWP"></SWPChart>
-            <h1 v-if="!hasCharts">点击打开图表</h1>
-          </div>
+          </div> -->
+        <div class="echarts-right">
+          <TempandHumChart class="flex-grow h-full" :data="TH"></TempandHumChart>
+          <ThreeConditionsChart :data="THREE"></ThreeConditionsChart>
+          <WindChart :data="WSD"></WindChart>
+          <PMChart :data="PMT"></PMChart>
+          <RainChart :data="Rain"></RainChart>
+          <VLChart :data="VL"></VLChart>
+          <CVChart :data="CV"></CVChart>
+          <SWPChart :data="SWP"></SWPChart>
         </div>
+        <!-- </div> -->
       </dv-border-box7>
     </div>
   </div>
@@ -235,37 +236,62 @@ watch(select_data, (newVal) => {
 
 <style lang="scss" scoped>
 .container {
-  @apply flex justify-center items-center flex-col h-full w-full;
+  @apply w-full h-full grid grid-cols-4 justify-items-center items-center auto-rows-fr;
   .table {
-    @apply flex w-full h-full items-center justify-center flex-col overflow-y-auto;
-    .table-top {
-      @apply flex justify-between items-center;
-      @apply w-full;
-    }
+    @apply grid grid-cols-2 col-span-3 py-5 justify-items-auto items-center overflow-y-auto h-full;
     .table-main {
-      @apply flex-grow w-full h-full overflow-hidden;
+      @apply col-span-2 mt-5 h-[100%-20px];
     }
   }
   .echarts-show {
-    @apply flex-grow w-full;
-    @apply flex justify-center items-center flex-col;
-    //设置长宽比为1:2
-    // aspect-ratio: 2 / 1;
-    .echarts-container {
-      @apply flex justify-center items-center h-full;
-      @apply p-5 mb-5;
-      .echarts-left {
-        @apply flex justify-start items-center flex-col overflow-y-auto overflow-x-hidden px-5 h-400px;
-        :deep(.el-button) {
-          @apply my-3 mx-5 w-200px;
-        }
-      }
-      .echarts-right {
-        @apply w-full pl-5 border-l-3 h-full;
-        // @apply flex justify-center items-center;
-        width: 100% !important;
+    @apply col-span-2 py-10;
+    @apply flex justify-center items-center flex-col w-full h-[400px];
+    .echarts-right {
+      @apply flex flex-col h-full w-full overflow-y-auto;
+      > * {
+        @apply py-10 px-5 overflow-x-hidden;
+        // @apply flex-grow;
+        flex: 0 0 100%;
       }
     }
   }
+  // .echarts-right > * {
+
+  // }
+  // @apply flex justify-center items-center flex-col h-full w-full;
+  // .borad-top {
+  //   @apply flex justify-center items-center w-full overflow-y-auto;
+  //   .table {
+  //     @apply flex items-center justify-center flex-col overflow-y-auto;
+  //     .table-top {
+  //       @apply flex justify-between items-center;
+  //       @apply w-full;
+  //     }
+  //     .table-main {
+  //       @apply flex-grow w-full h-full overflow-hidden;
+  //     }
+  //   }
+  // }
+  // .echarts-show {
+  //   @apply flex-grow w-full;
+  //   @apply flex justify-center items-center flex-col;
+  //   //设置长宽比为1:2
+  //   // aspect-ratio: 2 / 1;
+  //   .echarts-container {
+  //     @apply flex justify-center items-center h-full;
+  //     @apply p-5 mb-5;
+  //     .echarts-left {
+  //       @apply flex justify-start items-center flex-col overflow-y-auto overflow-x-hidden px-5 h-400px;
+  //       :deep(.el-button) {
+  //         @apply my-3 mx-5 w-200px;
+  //       }
+  //     }
+  //     .echarts-right {
+  //       @apply w-full pl-5 border-l-3 h-full;
+  //       // @apply flex justify-center items-center;
+  //       width: 100% !important;
+  //     }
+  //   }
+  // }
 }
 </style>
