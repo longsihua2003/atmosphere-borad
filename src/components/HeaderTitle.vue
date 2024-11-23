@@ -1,15 +1,17 @@
 <template>
-  <div class="d-flex jc-center title_wrap">
-    <div class="zuojuxing"></div>
-    <div class="youjuxing"></div>
-    <div class="guang"></div>
-    <div class="d-flex jc-center">
-      <div class="title">
-        <span class="title-text">{{ title }}</span>
+  <div class="relative">
+    <div class="d-flex jc-center title_wrap">
+      <div class="zuojuxing"></div>
+      <div class="youjuxing"></div>
+      <div class="guang"></div>
+      <div class="d-flex jc-center">
+        <div class="title">
+          <span class="title-text">{{ title }}</span>
+        </div>
       </div>
-    </div>
-    <div class="timers">
-      {{ time() }}
+      <div class="timers">
+        {{ time() }}
+      </div>
     </div>
   </div>
 </template>

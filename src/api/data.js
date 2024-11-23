@@ -30,7 +30,7 @@ export const getData = async (start_time, end_time) => {
   end_time = end_time || new Date().getTime();
 
   try {
-    const res = get('/api/data/1/10', {
+    const res = get('/borad/1/10', {
       start_time,
       end_time,
     });

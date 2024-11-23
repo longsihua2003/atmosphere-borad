@@ -1,6 +1,6 @@
 <template>
   <div class="eltable-div">
-    <el-table v-loading="table_loading" :data="tableData" border max-height="180">
+    <el-table v-loading="table_loading" :data="tableData" border class="border-table">
       <el-table-column fixed prop="create_time" label="时间" width="180" show-overflow-tooltip />
       <el-table-column prop="jiebin" label="结晶" width="120" />
       <el-table-column prop="shuimo" label="水膜" width="120" />
@@ -27,7 +27,6 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import { getData } from '@/api/data';
 const table_loading = ref(true);
 const tableData = ref(null);
 
@@ -48,10 +47,14 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+.border-table {
+  @apply h-full overflow-y-auto;
+}
 .eltable-div {
   @apply w-full;
 }
 .el-table {
+  // @apply overflow-y-auto;
   :deep(th) {
     @apply bg-black;
   }

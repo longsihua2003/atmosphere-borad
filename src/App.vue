@@ -5,18 +5,26 @@ import HeaderTitle from '@/components/HeaderTitle.vue';
 
 <template>
   <div class="content">
-    <header>
-      <HeaderTitle class="base-header" title="可视化大屏测试标题"></HeaderTitle>
-    </header>
-
-    <RouterView />
+    <HeaderTitle class="base-header" title="可视化大屏测试标题"></HeaderTitle>
+    <RouterView class="content-main" />
   </div>
 </template>
 
 <style scoped>
 .content {
-  display: flex;
+  @apply flex flex-col h-screen w-screen justify-center items-center;
+
+  .base-header {
+    @apply w-full;
+  }
+
+  .content-main {
+    @apply h-[calc(100%-60px)];
+  }
+
+  /* display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%; */
 }
 </style>

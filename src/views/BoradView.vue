@@ -3,6 +3,7 @@ import { BorderBox7 as DvBorderBox7 } from '@kjgl77/datav-vue3';
 import BoradTable from '@/components/BoradTable.vue';
 import LineEchart from '@/components/LineEchart.vue';
 import TempandHumChart from '@/components/TempandHumChart.vue';
+import THPieChart from '@/components/THPieChart.vue';
 import ThreeConditionsChart from '@/components/ThreeConditionsChart.vue';
 import WindChart from '@/components/WindChart.vue';
 import PMChart from '@/components/PMChart.vue';
@@ -23,10 +24,10 @@ import {
   CurrentandVoltage,
   SolarWindPressure,
 } from '@/api/data';
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const TH = ref([]);
-const THB = ref(false);
+const THB = ref(true);
 const THREE = ref([]);
 const THREEB = ref(false);
 const WSD = ref([]);
@@ -53,24 +54,77 @@ const ButtenList = [
   { name: '光电、风电、压电', value: 'SWPB' },
 ];
 const tableData = ref(null);
-function setDate(start_time = null, end_time = null) {
+async function setDate(start_time = null, end_time = null) {
   getData(start_time, end_time).then((res) => {
     tableData.value = res.result.list;
     handleData(res.result.list);
-    TH.value = TempandHum;
-    THREE.value = ThreeConditions;
-    WSD.value = WindSpeedandDirection;
-    PMT.value = PM;
-    Rain.value = Rainfall;
-    VL.value = VisibilityandLightIntensity;
-    CV.value = CurrentandVoltage;
-    SWP.value = SolarWindPressure;
+    TH.value = TempandHum.map((item) => {
+      return {
+        name: item.name,
+        wendu: item.wendu,
+        shidu: item.shidu,
+      };
+    });
+    THREE.value = ThreeConditions.map((item) => {
+      return {
+        name: item.name,
+        jiebin: item.jiebin,
+        shuimo: item.shuimo,
+        jixue: item.jixue,
+      };
+    });
+    WSD.value = WindSpeedandDirection.map((item) => {
+      return {
+        name: item.name,
+        fengsu: item.fengsu,
+        fengxiang: item.fengxiang,
+      };
+    });
+    PMT.value = PM.map((item) => {
+      return {
+        name: item.name,
+        pm10: item.pm10,
+        pm25: item.pm25,
+      };
+    });
+    Rain.value = Rainfall.map((item) => {
+      return {
+        name: item.name,
+        yuliang: item.yuliang,
+        yuqiang: item.yuqiang,
+      };
+    });
+    VL.value = VisibilityandLightIntensity.map((item) => {
+      return {
+        name: item.name,
+        nengjiandu: item.nengjiandu,
+        guangqiang: item.guangqiang,
+      };
+    });
+    CV.value = CurrentandVoltage.map((item) => {
+      return {
+        name: item.name,
+        dianliu: item.dianliu,
+        dianya: item.dianya,
+      };
+    });
+    SWP.value = SolarWindPressure.map((item) => {
+      return {
+        name: item.name,
+        guangdian: item.guangdian,
+        fengdian: item.fengdian,
+        yadian: item.yadian,
+      };
+    });
     if (currentButten.value) {
       clickButten(currentButten.value);
     }
   });
 }
-setDate();
+onMounted(async () => {
+  await setDate();
+});
+// THB.value = true;
 // function clickButten(value) {
 //   ButtenList.forEach((item) => {
 //     console.log(item, value);
@@ -82,13 +136,16 @@ setDate();
 //     }
 //   });
 // }
-const currentButten = ref(null);
+const currentButten = ref('THB');
 const hasCharts = computed(() => {
   return THB.value || THREEB.value || WSDB.value || PMTB.value || RainB.value || VLB.value || CVB.value || SWPB.value;
 });
 
 function clickButten(value) {
   // 如果点击的是当前的按钮，直接返回
+  if (currentButten.value === value) {
+    return;
+  }
   currentButten.value = value;
   ButtenList.forEach((item) => {
     // 直接修改响应式数据
@@ -147,7 +204,8 @@ watch(select_data, (newVal) => {
           />
         </div>
       </div>
-      <BoradTable :data="tableData"></BoradTable>
+      <BoradTable class="table-main" :data="tableData"></BoradTable>
+      <THPieChart :data="TH"></THPieChart>
     </div>
     <div class="echarts-show">
       <h1 class="text-3xl my-5">数据分析</h1>
@@ -177,35 +235,35 @@ watch(select_data, (newVal) => {
 
 <style lang="scss" scoped>
 .container {
-  @apply justify-center items-center flex-col;
-  @apply mx-20 h-full;
+  @apply flex justify-center items-center flex-col h-full w-full;
   .table {
-    @apply w-full h-1/2;
-    display: contents;
+    @apply flex w-full h-full items-center justify-center flex-col overflow-y-auto;
     .table-top {
       @apply flex justify-between items-center;
       @apply w-full;
-      .block {
-        @apply w-1/3;
-      }
+    }
+    .table-main {
+      @apply flex-grow w-full h-full overflow-hidden;
     }
   }
   .echarts-show {
-    @apply my-5;
+    @apply flex-grow w-full;
+    @apply flex justify-center items-center flex-col;
+    //设置长宽比为1:2
+    // aspect-ratio: 2 / 1;
     .echarts-container {
-      @apply flex justify-start items-center;
-      @apply p-5;
+      @apply flex justify-center items-center h-full;
+      @apply p-5 mb-5;
       .echarts-left {
-        @apply flex justify-start items-center flex-col overflow-y-auto max-h-300px overflow-x-hidden px-5;
+        @apply flex justify-start items-center flex-col overflow-y-auto overflow-x-hidden px-5 h-400px;
         :deep(.el-button) {
-          @apply m-0 my-3 mx-5 w-200px;
+          @apply my-3 mx-5 w-200px;
         }
       }
       .echarts-right {
-        @apply w-full h-full pl-5 border-l-3;
-        @apply flex justify-center items-center;
+        @apply w-full pl-5 border-l-3 h-full;
+        // @apply flex justify-center items-center;
         width: 100% !important;
-        height: 300px !important;
       }
     }
   }

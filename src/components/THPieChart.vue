@@ -9,7 +9,7 @@ import { onMounted } from 'vue';
 const props = defineProps({
   title: {
     type: String,
-    default: '能见度、光强图表',
+    default: '温度湿度图表',
   },
   data: {
     type: Array,
@@ -17,28 +17,28 @@ const props = defineProps({
       return [
         {
           name: 'data1',
-          nengjiandu: '25',
-          guangqiang: '50',
+          wendu: '25',
+          shidu: '50',
         },
         {
           name: 'data2',
-          nengjiandu: '26',
-          guangqiang: '51',
+          wendu: '26',
+          shidu: '51',
         },
         {
           name: 'data3',
-          nengjiandu: '27',
-          guangqiang: '52',
+          wendu: '27',
+          shidu: '52',
         },
         {
           name: 'data4',
-          nengjiandu: '28',
-          guangqiang: '53',
+          wendu: '28',
+          shidu: '53',
         },
         {
           name: 'data5',
-          nengjiandu: '29',
-          guangqiang: '54',
+          wendu: '29',
+          shidu: '54',
         },
       ];
     },
@@ -61,92 +61,49 @@ const option = {
     },
   },
   tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      type: 'cross',
-    },
+    trigger: 'item',
   },
   legend: {
-    data: ['能见度', '光强'],
+    data: ['温度', '湿度'],
     textStyle: {
       color: '#ffffff',
     },
+    show: false,
   },
-  xAxis: [
+  series: [
     {
-      type: 'category',
-      axisTick: {
-        alignWithLabel: true,
-      },
+      type: 'pie',
+      // radius: ['50%', '70%'],
+      center: ['50%', '50%'],
+      selectedMode: 'single',
       data: [],
-      axisLabel: {
-        color: '#ffffff',
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)',
+        },
       },
     },
   ],
-  yAxis: [
-    {
-      type: 'value',
-      name: '能见度',
-      min: 0,
-      max: 3000,
-      position: 'left',
-      axisLine: {
-        show: true,
-        lineStyle: {
-          color: colors[0],
-        },
-      },
-      axisLabel: {
-        formatter: '{value} m',
-      },
-    },
-    {
-      type: 'value',
-      name: '光强',
-      min: 0,
-      max: 6000,
-      position: 'right',
-      axisLine: {
-        lineStyle: {
-          color: colors[1],
-        },
-      },
-      axisLabel: {
-        formatter: '{value} mm',
-      },
-    },
-  ],
-  server: [],
 };
 
 onMounted(() => {
   mychart = echarts.init(chartsDom.value);
-  option.xAxis[0].data = props.data.map((item) => item.name);
-  option.series = [
+  option.series[0].data = [
     {
-      name: '能见度',
-      type: 'line',
-      data: props.data.map((item) => item.nengjiandu),
-      emphasis: {
-        focus: 'series',
-      },
+      name: '温度',
+      value: 25,
       itemStyle: {
         color: colors[0],
       },
-      yAxisIndex: 0,
     },
     {
-      name: '光强',
-      type: 'line',
-      data: props.data.map((item) => item.guangqiang),
-      emphasis: {
-        focus: 'series',
-      },
+      name: '湿度',
+      value: 50,
       itemStyle: {
         color: colors[1],
       },
-      yAxisIndex: 1,
     },
   ];
   mychart.setOption(option);
@@ -189,19 +146,20 @@ watch(
   () => props.data,
   (newVal) => {
     if (data_verification()) {
-      option.xAxis[0].data = newVal.map((item) => item.name);
-      option.series = [
+      option.series[0].data = [
         {
-          name: '能见度',
-          type: 'line',
-          data: newVal.map((item) => item.nengjiandu),
-          yAxisIndex: 0,
+          name: '温度',
+          value: newVal[0].wendu,
+          itemStyle: {
+            color: colors[0],
+          },
         },
         {
-          name: '光强',
-          type: 'line',
-          data: newVal.map((item) => item.guangqiang),
-          yAxisIndex: 1,
+          name: '湿度',
+          value: newVal[0].shidu,
+          itemStyle: {
+            color: colors[1],
+          },
         },
       ];
       mychart.setOption(option);
