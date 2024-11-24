@@ -4,7 +4,7 @@
 
 <script setup>
 import * as echarts from 'echarts';
-import { da } from 'element-plus/es/locales.mjs';
+import { da, it } from 'element-plus/es/locales.mjs';
 import { onMounted } from 'vue';
 
 const props = defineProps({
@@ -102,12 +102,18 @@ onMounted(() => {
       name: 'PM2.5',
       type: 'line',
       data: props.data.map((item) => item.pm25),
+      itemStyle: {
+        color: colors[0],
+      },
       yAxisIndex: 0,
     },
     {
       name: 'PM10',
       type: 'line',
       data: props.data.map((item) => item.pm10),
+      itemStyle: {
+        color: colors[1],
+      },
       yAxisIndex: 0,
     },
   ];
@@ -157,12 +163,18 @@ watch(
           name: 'PM2.5',
           type: 'line',
           data: newVal.map((item) => item.pm25),
+          itemStyle: {
+            color: colors[0],
+          },
           yAxisIndex: 0,
         },
         {
           name: 'PM10',
           type: 'line',
           data: newVal.map((item) => item.pm10),
+          itemStyle: {
+            color: colors[1],
+          },
           yAxisIndex: 0,
         },
       ];

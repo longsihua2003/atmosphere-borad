@@ -4,6 +4,7 @@
 
 <script setup>
 import * as echarts from 'echarts';
+import { it } from 'element-plus/es/locales.mjs';
 import { onMounted } from 'vue';
 
 const props = defineProps({
@@ -128,12 +129,18 @@ onMounted(() => {
       name: '电流',
       type: 'line',
       data: props.data.map((item) => item.dianliu),
+      itemStyle: {
+        color: colors[0],
+      },
       yAxisIndex: 0,
     },
     {
       name: '电压',
       type: 'line',
       data: props.data.map((item) => item.dianya),
+      itemStyle: {
+        color: colors[1],
+      },
       yAxisIndex: 1,
     },
   ];
@@ -183,12 +190,18 @@ watch(
           name: '电流',
           type: 'line',
           data: newVal.map((item) => item.dianliu),
+          itemStyle: {
+            color: colors[0],
+          },
           yAxisIndex: 0,
         },
         {
           name: '电压',
           type: 'line',
           data: newVal.map((item) => item.dianya),
+          itemStyle: {
+            color: colors[1],
+          },
           yAxisIndex: 1,
         },
       ];

@@ -60,7 +60,8 @@ const option = {
       color: '#ffffff',
       fontSize: 30,
     },
-    left: '20',
+    // left: '150',
+    left: 'center',
     top: '50',
   },
   tooltip: {

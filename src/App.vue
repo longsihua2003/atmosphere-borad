@@ -5,7 +5,7 @@ import HeaderTitle from '@/components/HeaderTitle.vue';
 
 <template>
   <div class="content">
-    <HeaderTitle class="base-header" title="可视化大屏测试标题"></HeaderTitle>
+    <HeaderTitle class="base-header" title="气象监测大屏"></HeaderTitle>
     <RouterView class="content-main" />
   </div>
 </template>

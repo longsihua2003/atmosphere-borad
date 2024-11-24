@@ -1,7 +1,6 @@
 <script setup>
 import { BorderBox7 as DvBorderBox7 } from '@kjgl77/datav-vue3';
 import BoradTable from '@/components/BoradTable.vue';
-import LineEchart from '@/components/LineEchart.vue';
 import TempandHumChart from '@/components/TempandHumChart.vue';
 import THPieChart from '@/components/THPieChart.vue';
 import ThreeConditionsChart from '@/components/ThreeConditionsChart.vue';
@@ -192,7 +191,7 @@ watch(select_data, (newVal) => {
 <template>
   <div class="container">
     <div class="table">
-      <h1 class="text-3xl font-bold">数据总览</h1>
+      <!-- <h1 class="text-3xl font-bold">数据总览</h1> -->
       <div class="block">
         <el-date-picker
           v-model="select_data"
@@ -210,7 +209,7 @@ watch(select_data, (newVal) => {
     <SWPPieChart :data="SWP"></SWPPieChart>
     <ThreeCPieChart :data="THREE"></ThreeCPieChart>
     <div class="echarts-show">
-      <h1 class="text-3xl my-5 font-bold">数据分析</h1>
+      <!-- <h1 class="text-3xl my-5 font-bold">数据分析</h1> -->
       <dv-border-box7>
         <!-- <div class="echarts-container"> -->
         <!-- <div class="echarts-left">
@@ -236,16 +235,20 @@ watch(select_data, (newVal) => {
 
 <style lang="scss" scoped>
 .container {
-  @apply w-full h-full grid grid-cols-4 justify-items-center items-center auto-rows-fr;
+  @apply w-full h-full grid grid-cols-6 justify-items-center items-center auto-rows-fr;
+  grid-auto-rows: 50vh;
   .table {
-    @apply grid grid-cols-2 col-span-3 py-5 justify-items-auto items-center overflow-y-auto h-full;
+    @apply grid grid-cols-2 justify-items-center col-span-6 py-5 justify-items-auto items-center overflow-y-auto h-full;
+    .block {
+      @apply col-span-2;
+    }
     .table-main {
       @apply col-span-2 mt-5 h-[100%-20px];
     }
   }
   .echarts-show {
     @apply col-span-2 py-10;
-    @apply flex justify-center items-center flex-col w-full h-[400px];
+    @apply flex justify-center items-center flex-col w-full h-full col-span-6;
     .echarts-right {
       @apply flex flex-col h-full w-full overflow-y-auto;
       > * {
@@ -255,11 +258,14 @@ watch(select_data, (newVal) => {
       }
     }
   }
+  > *:not(.table):not(.echarts-show) {
+    @apply col-span-2 my-5; // 每个独立图表占一列
+  }
   @media (max-width: 768px) {
     @apply overflow-y-auto w-full h-full grid grid-cols-2 items-center; // 修改为单列布局
     grid-auto-rows: 50vh;
     .table {
-      @apply grid-cols-2; // 表格单列
+      @apply grid-cols-2 justify-items-center; // 表格单列
       .table-main {
         @apply mt-5 mt-5 h-[100%-20px]; // 高度调整为自适应
       }
@@ -273,8 +279,9 @@ watch(select_data, (newVal) => {
         }
       }
     }
+
     > *:not(.table):not(.echarts-show) {
-      @apply col-span-2 my-5; // 每个独立图表占一列
+      @apply col-span-6 my-5; // 每个独立图表占一列
     }
   }
   // .echarts-right > * {
