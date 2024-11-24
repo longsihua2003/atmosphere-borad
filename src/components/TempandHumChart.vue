@@ -58,6 +58,7 @@ const option = {
     text: props.title,
     textStyle: {
       color: '#ffffff',
+      fontSize: 24,
     },
   },
   tooltip: {
@@ -71,6 +72,10 @@ const option = {
     textStyle: {
       color: '#ffffff',
     },
+  },
+  grid: {
+    top: '25%',
+    bottom: '10%',
   },
   xAxis: [
     {

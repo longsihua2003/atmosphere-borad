@@ -59,6 +59,7 @@ const option = {
     text: props.title,
     textStyle: {
       color: '#ffffff',
+      fontSize: 24,
     },
   },
   tooltip: {
@@ -66,6 +67,10 @@ const option = {
     axisPointer: {
       type: 'cross',
     },
+  },
+  grid: {
+    top: '25%',
+    bottom: '10%',
   },
   legend: {
     data: ['雨量', '雨强'],

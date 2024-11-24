@@ -4,13 +4,12 @@
 
 <script setup>
 import * as echarts from 'echarts';
-import { da, it } from 'element-plus/es/locales.mjs';
 import { onMounted } from 'vue';
 
 const props = defineProps({
   title: {
     type: String,
-    default: 'PM值图表',
+    default: '电压、电流',
   },
   data: {
     type: Array,
@@ -18,28 +17,28 @@ const props = defineProps({
       return [
         {
           name: 'data1',
-          pm25: '100',
-          pm10: '50',
+          wendu: '25',
+          shidu: '50',
         },
         {
           name: 'data2',
-          pm25: '3',
-          pm10: '51',
+          wendu: '26',
+          shidu: '51',
         },
         {
           name: 'data3',
-          pm25: '0',
-          pm10: '52',
+          wendu: '27',
+          shidu: '52',
         },
         {
           name: 'data4',
-          pm25: '1.4',
-          pm10: '53',
+          wendu: '28',
+          shidu: '53',
         },
         {
           name: 'data5',
-          pm25: '1.8',
-          pm10: '54',
+          wendu: '29',
+          shidu: '54',
         },
       ];
     },
@@ -51,7 +50,7 @@ const chartsDom = ref(null);
 // 图表对象
 let mychart = null;
 
-const colors = ['#DE6E6A', '#5A6FC0'];
+const colors = ['#DE6E6A', '#F2CA6B', '#5A6FC0'];
 
 const option = {
   color: '#ffffff',
@@ -59,68 +58,90 @@ const option = {
     text: props.title,
     textStyle: {
       color: '#ffffff',
-      fontSize: 24,
+      fontSize: 30,
     },
+    // left: '150',
+    left: 'center',
+    top: '50',
   },
   tooltip: {
-    trigger: 'axis',
-  },
-  grid: {
-    top: '25%',
-    bottom: '10%',
+    trigger: 'item',
+    formatter: '{b} : {c}',
+    // formatter: (params) => {
+    //   // if (params.value.realvalue === undefined) {
+    //   //   return `${params.name}: ${params.value}`;
+    //   // }
+    //   return `${params.name}: ${params.data.realvalue}`;
+    // },
   },
   legend: {
-    data: ['PM2.5', 'PM10'],
+    data: ['电压', '电流'],
     textStyle: {
       color: '#ffffff',
     },
+    show: false,
   },
-  xAxis: [
+  grid: {
+    top: '10%', // 距顶部的距离，调整让图表居中
+    // left: '15%',     // 距左侧的距离
+    // right: '15%',    // 距右侧的距离
+    // bottom: '15%',    // 距底部的距离
+    containLabel: true,
+  },
+  series: [
     {
-      type: 'category',
-      axisTick: {
-        alignWithLabel: true,
-      },
+      type: 'pie',
+      // radius: ['50%', '70%'],
+      center: ['50%', '50%'],
+      top: '50',
+      selectedMode: 'single',
       data: [],
-      axisLabel: {
-        color: '#ffffff',
+      label: {
+        position: 'inside',
+        formatter: '{b} : {c}',
+        // formatter: (params) => {
+        //   // console.log(params.data);
+        //   // if (params.value.realvalue === undefined) {
+        //   //   return `${params.name}: ${params.value}`;
+        //   // }
+        //   return `${params.name}: ${params.data.realvalue}`;
+        // },
+      },
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)',
+        },
       },
     },
   ],
-  yAxis: [
-    {
-      type: 'value',
-      name: 'PM值大小',
-      min: 0,
-      max: 150,
-      position: 'left',
-    },
-  ],
-  server: [],
 };
 
 onMounted(() => {
   mychart = echarts.init(chartsDom.value);
-  option.xAxis[0].data = props.data.map((item) => item.name);
-  option.series = [
+  option.series[0].data = [
     {
-      name: 'PM2.5',
-      type: 'line',
-      data: props.data.map((item) => item.pm25),
+      name: '电压',
+      value: 25,
       itemStyle: {
         color: colors[0],
       },
-      yAxisIndex: 0,
     },
     {
-      name: 'PM10',
-      type: 'line',
-      data: props.data.map((item) => item.pm10),
+      name: '电流',
+      value: 50,
       itemStyle: {
         color: colors[1],
       },
-      yAxisIndex: 0,
     },
+    // {
+    //   name: '积雪',
+    //   value: 25,
+    //   itemStyle: {
+    //     color: colors[2],
+    //   },
+    // },
   ];
   mychart.setOption(option);
 });
@@ -162,25 +183,23 @@ watch(
   () => props.data,
   (newVal) => {
     if (data_verification()) {
-      option.xAxis[0].data = newVal.map((item) => item.name);
-      option.series = [
+      // console.log(newVal);
+      option.series[0].data = [
         {
-          name: 'PM2.5',
-          type: 'line',
-          data: newVal.map((item) => item.pm25),
+          name: '电压',
+          value: newVal[0].dianya,
+          // value: 30,
+          // realvalue: newVal[0].jiebin,
           itemStyle: {
             color: colors[0],
           },
-          yAxisIndex: 0,
         },
         {
-          name: 'PM10',
-          type: 'line',
-          data: newVal.map((item) => item.pm10),
+          name: '电流',
+          value: newVal[0].dianliu,
           itemStyle: {
             color: colors[1],
           },
-          yAxisIndex: 0,
         },
       ];
       mychart.setOption(option);

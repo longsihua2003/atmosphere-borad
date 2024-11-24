@@ -6,8 +6,9 @@ app = Flask(__name__)
 # 全局启用 CORS
 CORS(app)
 
-@app.route('/api/borad/<int:page>/<int:page_size>', methods=['GET'], defaults={'page': 1, 'page_size': 10})
+@app.route('/api/borad/<int:page>/<int:page_size>', methods=['GET'])
 def get_data(page, page_size):
+    print(page, page_size)
     start_time = request.args.get('start_time', None)
     end_time = request.args.get('end_time', None)
     if start_time is None or end_time is None:

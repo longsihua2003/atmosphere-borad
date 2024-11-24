@@ -10,6 +10,7 @@ import PMChart from '@/components/PMChart.vue';
 import RainChart from '@/components/RainChart.vue';
 import VLChart from '@/components/VLChart.vue';
 import CVChart from '@/components/CVChart.vue';
+import CVPieChart from '@/components/CVPieChart.vue';
 import SWPChart from '@/components/SWPChart.vue';
 import SWPPieChart from '@/components/SWPPieChart.vue';
 
@@ -208,6 +209,8 @@ watch(select_data, (newVal) => {
     <THPieChart :data="TH"></THPieChart>
     <SWPPieChart :data="SWP"></SWPPieChart>
     <ThreeCPieChart :data="THREE"></ThreeCPieChart>
+    <CVPieChart :data="CV"></CVPieChart>
+
     <!-- <div class="echarts-show"> -->
     <!-- <h1 class="text-3xl my-5 font-bold">数据分析</h1> -->
     <!-- <dv-border-box7> -->
@@ -219,14 +222,30 @@ watch(select_data, (newVal) => {
           </div> -->
     <!-- <div class="echarts-right"> -->
     <div class="echarts-show">
-      <TempandHumChart class="flex-grow h-full" :data="TH"></TempandHumChart>
-      <ThreeConditionsChart :data="THREE"></ThreeConditionsChart>
-      <WindChart :data="WSD"></WindChart>
-      <PMChart :data="PMT"></PMChart>
-      <RainChart :data="Rain"></RainChart>
-      <VLChart :data="VL"></VLChart>
-      <CVChart :data="CV"></CVChart>
-      <SWPChart :data="SWP"></SWPChart>
+      <dv-border-box7 class="p-5">
+        <TempandHumChart class="flex-grow h-full" :data="TH"></TempandHumChart>
+      </dv-border-box7>
+      <dv-border-box7 class="my-5 p-5">
+        <ThreeConditionsChart :data="THREE"></ThreeConditionsChart>
+      </dv-border-box7>
+      <dv-border-box7 class="my-5 p-5">
+        <WindChart :data="WSD"></WindChart>
+      </dv-border-box7>
+      <dv-border-box7 class="my-5 p-5">
+        <PMChart :data="PMT"></PMChart>
+      </dv-border-box7>
+      <dv-border-box7 class="my-5 p-5">
+        <RainChart :data="Rain"></RainChart>
+      </dv-border-box7>
+      <dv-border-box7 class="my-5 p-5">
+        <VLChart :data="VL"></VLChart>
+      </dv-border-box7>
+      <dv-border-box7 class="my-5 p-5">
+        <CVChart :data="CV"></CVChart>
+      </dv-border-box7>
+      <dv-border-box7 class="my-5 p-5">
+        <SWPChart :data="SWP"></SWPChart>
+      </dv-border-box7>
     </div>
     <!-- </div> -->
     <!-- </div> -->
@@ -237,10 +256,10 @@ watch(select_data, (newVal) => {
 
 <style lang="scss" scoped>
 .container {
-  @apply w-full h-full grid grid-cols-6 justify-items-center items-center auto-rows-fr;
+  @apply w-full h-full grid grid-cols-8 justify-items-center items-center auto-rows-fr;
   grid-auto-rows: 50vh;
   .table {
-    @apply grid grid-cols-2 justify-items-center col-span-6 py-5 justify-items-auto items-center overflow-y-auto h-full;
+    @apply grid grid-cols-2 justify-items-center col-span-8 py-5 justify-items-auto items-center overflow-y-auto h-full;
     .block {
       @apply col-span-2;
     }
@@ -249,7 +268,7 @@ watch(select_data, (newVal) => {
     }
   }
   .echarts-show {
-    @apply col-span-6 py-10 w-full h-full;
+    @apply col-span-8 py-10 w-full h-full;
     //   @apply flex justify-center items-center flex-col w-full h-full col-span-6;
     //   .echarts-right {
     //     @apply flex flex-col h-full w-full overflow-y-auto;
@@ -284,7 +303,7 @@ watch(select_data, (newVal) => {
     // }
 
     > *:not(.table):not(.echarts-show) {
-      @apply col-span-6 my-5; // 每个独立图表占一列
+      @apply col-span-8 my-5; // 每个独立图表占一列
     }
   }
   // .echarts-right > * {

@@ -59,6 +59,7 @@ const option = {
     text: props.title,
     textStyle: {
       color: '#ffffff',
+      fontSize: 30,
     },
   },
   tooltip: {
@@ -67,11 +68,20 @@ const option = {
       type: 'cross',
     },
   },
+  grid: {
+    top: '25%',
+    bottom: '10%',
+  },
   legend: {
     data: ['电流', '电压'],
     textStyle: {
       color: '#ffffff',
     },
+    // orient: 'vertical', // 图例排列方向
+    // left: 'center',     // 图例横向位置
+    // top: '40%',         // 图例纵向位置
+    // itemWidth: 14,      // 图例小图标宽度
+    // itemHeight: 14,     // 图例小图标高度
   },
   xAxis: [
     {

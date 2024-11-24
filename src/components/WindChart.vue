@@ -59,6 +59,7 @@ const option = {
     text: props.title,
     textStyle: {
       color: '#ffffff',
+      fontSize: 24,
     },
   },
   tooltip: {
@@ -67,6 +68,10 @@ const option = {
       const index = params[0].dataIndex;
       return `${params[0].name}<br />风速：${params[0].value}<br />风向：${props.data[index].fengxiang}`;
     },
+  },
+  grid: {
+    top: '25%',
+    bottom: '10%',
   },
   legend: {
     data: ['风速'],

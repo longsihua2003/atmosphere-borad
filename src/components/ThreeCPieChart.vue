@@ -98,7 +98,7 @@ const option = {
       label: {
         position: 'inside',
         formatter: (params) => {
-          console.log(params.data);
+          // console.log(params.data);
           // if (params.value.realvalue === undefined) {
           //   return `${params.name}: ${params.value}`;
           // }
@@ -181,7 +181,7 @@ watch(
   () => props.data,
   (newVal) => {
     if (data_verification()) {
-      console.log(newVal);
+      // console.log(newVal);
       option.series[0].data = [
         {
           name: '结冰',

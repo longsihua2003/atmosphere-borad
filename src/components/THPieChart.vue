@@ -9,7 +9,7 @@ import { onMounted } from 'vue';
 const props = defineProps({
   title: {
     type: String,
-    default: '温度湿度图表',
+    default: '温度、湿度',
   },
   data: {
     type: Array,
