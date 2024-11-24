@@ -20,7 +20,7 @@
       <el-table-column prop="guangdian" label="光电" width="120" />
       <el-table-column prop="fengdian" label="风电" width="120" />
       <el-table-column prop="yadian" label="压电" width="120" />
-      <el-table-column fixed="right" prop="correct" label="校准度" width="150" />
+      <el-table-column prop="correct" label="校准度" width="150" />
     </el-table>
   </div>
 </template>

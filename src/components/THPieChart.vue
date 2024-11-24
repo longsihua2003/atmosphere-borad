@@ -58,6 +58,7 @@ const option = {
     text: props.title,
     textStyle: {
       color: '#ffffff',
+      fontSize: 30,
     },
     left: '20',
     top: '50',

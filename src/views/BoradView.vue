@@ -192,7 +192,7 @@ watch(select_data, (newVal) => {
 <template>
   <div class="container">
     <div class="table">
-      <h1 class="text-3xl">数据总览</h1>
+      <h1 class="text-3xl font-bold">数据总览</h1>
       <div class="block">
         <el-date-picker
           v-model="select_data"
@@ -210,7 +210,7 @@ watch(select_data, (newVal) => {
     <SWPPieChart :data="SWP"></SWPPieChart>
     <ThreeCPieChart :data="THREE"></ThreeCPieChart>
     <div class="echarts-show">
-      <h1 class="text-3xl my-5">数据分析</h1>
+      <h1 class="text-3xl my-5 font-bold">数据分析</h1>
       <dv-border-box7>
         <!-- <div class="echarts-container"> -->
         <!-- <div class="echarts-left">
@@ -253,6 +253,28 @@ watch(select_data, (newVal) => {
         // @apply flex-grow;
         flex: 0 0 100%;
       }
+    }
+  }
+  @media (max-width: 768px) {
+    @apply overflow-y-auto w-full h-full grid grid-cols-2 items-center; // 修改为单列布局
+    grid-auto-rows: 50vh;
+    .table {
+      @apply grid-cols-2; // 表格单列
+      .table-main {
+        @apply mt-5 mt-5 h-[100%-20px]; // 高度调整为自适应
+      }
+    }
+
+    .echarts-show {
+      @apply col-span-2; // 图表占单列
+      .echarts-right {
+        > * {
+          flex: 0 0 100%; // 自动扩展
+        }
+      }
+    }
+    > *:not(.table):not(.echarts-show) {
+      @apply col-span-2 my-5; // 每个独立图表占一列
     }
   }
   // .echarts-right > * {
