@@ -91,6 +91,7 @@ const option = {
       data: [],
       label: {
         position: 'inside',
+        formatter: '{b} : {c}',
       },
       emphasis: {
         itemStyle: {

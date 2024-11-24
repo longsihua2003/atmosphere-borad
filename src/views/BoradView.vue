@@ -208,28 +208,30 @@ watch(select_data, (newVal) => {
     <THPieChart :data="TH"></THPieChart>
     <SWPPieChart :data="SWP"></SWPPieChart>
     <ThreeCPieChart :data="THREE"></ThreeCPieChart>
-    <div class="echarts-show">
-      <!-- <h1 class="text-3xl my-5 font-bold">数据分析</h1> -->
-      <dv-border-box7>
-        <!-- <div class="echarts-container"> -->
-        <!-- <div class="echarts-left">
+    <!-- <div class="echarts-show"> -->
+    <!-- <h1 class="text-3xl my-5 font-bold">数据分析</h1> -->
+    <!-- <dv-border-box7> -->
+    <!-- <div class="echarts-container"> -->
+    <!-- <div class="echarts-left">
             <el-button v-for="(item, index) in ButtenList" :key="index" type="primary" @click="clickButten(item.value)">
               {{ item.name }}
             </el-button>
           </div> -->
-        <div class="echarts-right">
-          <TempandHumChart class="flex-grow h-full" :data="TH"></TempandHumChart>
-          <ThreeConditionsChart :data="THREE"></ThreeConditionsChart>
-          <WindChart :data="WSD"></WindChart>
-          <PMChart :data="PMT"></PMChart>
-          <RainChart :data="Rain"></RainChart>
-          <VLChart :data="VL"></VLChart>
-          <CVChart :data="CV"></CVChart>
-          <SWPChart :data="SWP"></SWPChart>
-        </div>
-        <!-- </div> -->
-      </dv-border-box7>
+    <!-- <div class="echarts-right"> -->
+    <div class="echarts-show">
+      <TempandHumChart class="flex-grow h-full" :data="TH"></TempandHumChart>
+      <ThreeConditionsChart :data="THREE"></ThreeConditionsChart>
+      <WindChart :data="WSD"></WindChart>
+      <PMChart :data="PMT"></PMChart>
+      <RainChart :data="Rain"></RainChart>
+      <VLChart :data="VL"></VLChart>
+      <CVChart :data="CV"></CVChart>
+      <SWPChart :data="SWP"></SWPChart>
     </div>
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- </dv-border-box7> -->
+    <!-- </div> -->
   </div>
 </template>
 
@@ -247,17 +249,18 @@ watch(select_data, (newVal) => {
     }
   }
   .echarts-show {
-    @apply col-span-2 py-10;
-    @apply flex justify-center items-center flex-col w-full h-full col-span-6;
-    .echarts-right {
-      @apply flex flex-col h-full w-full overflow-y-auto;
-      > * {
-        @apply py-10 px-5 overflow-x-hidden;
-        // @apply flex-grow;
-        flex: 0 0 100%;
-      }
-    }
+    @apply col-span-6 py-10 w-full h-full;
+    //   @apply flex justify-center items-center flex-col w-full h-full col-span-6;
+    //   .echarts-right {
+    //     @apply flex flex-col h-full w-full overflow-y-auto;
+    //     > * {
+    //       @apply py-10 px-5 overflow-x-hidden;
+    //       // @apply flex-grow;
+    //       flex: 0 0 100%;
+    //     }
+    //   }
   }
+
   > *:not(.table):not(.echarts-show) {
     @apply col-span-2 my-5; // 每个独立图表占一列
   }
@@ -271,14 +274,14 @@ watch(select_data, (newVal) => {
       }
     }
 
-    .echarts-show {
-      @apply col-span-2; // 图表占单列
-      .echarts-right {
-        > * {
-          flex: 0 0 100%; // 自动扩展
-        }
-      }
-    }
+    // .echarts-show {
+    //   @apply col-span-2; // 图表占单列
+    //   .echarts-right {
+    //     > * {
+    //       flex: 0 0 100%; // 自动扩展
+    //     }
+    //   }
+    // }
 
     > *:not(.table):not(.echarts-show) {
       @apply col-span-6 my-5; // 每个独立图表占一列

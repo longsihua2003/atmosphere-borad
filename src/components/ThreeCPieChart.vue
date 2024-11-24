@@ -66,6 +66,12 @@ const option = {
   },
   tooltip: {
     trigger: 'item',
+    formatter: (params) => {
+      // if (params.value.realvalue === undefined) {
+      //   return `${params.name}: ${params.value}`;
+      // }
+      return `${params.name}: ${params.data.realvalue}`;
+    },
   },
   legend: {
     data: ['结冰', '水膜', '积雪'],
@@ -91,6 +97,13 @@ const option = {
       data: [],
       label: {
         position: 'inside',
+        formatter: (params) => {
+          console.log(params.data);
+          // if (params.value.realvalue === undefined) {
+          //   return `${params.name}: ${params.value}`;
+          // }
+          return `${params.name}: ${params.data.realvalue}`;
+        },
       },
       emphasis: {
         itemStyle: {
@@ -168,24 +181,31 @@ watch(
   () => props.data,
   (newVal) => {
     if (data_verification()) {
+      console.log(newVal);
       option.series[0].data = [
         {
           name: '结冰',
-          value: newVal[0].jiebing,
+          // value: newVal[0].jiebing,
+          value: 30,
+          realvalue: newVal[0].jiebin,
           itemStyle: {
             color: colors[0],
           },
         },
         {
           name: '水膜',
-          value: newVal[0].shuimo,
+          // value: newVal[0].shuimo,
+          value: 30,
+          realvalue: newVal[0].shuimo,
           itemStyle: {
             color: colors[1],
           },
         },
         {
           name: '积雪',
-          value: newVal[0].jixue,
+          // value: newVal[0].jixue,
+          value: 30,
+          realvalue: newVal[0].jixue,
           itemStyle: {
             color: colors[2],
           },

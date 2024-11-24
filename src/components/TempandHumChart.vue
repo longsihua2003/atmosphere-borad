@@ -4,7 +4,6 @@
 
 <script setup>
 import * as echarts from 'echarts';
-import { it } from 'element-plus/es/locales.mjs';
 import { onMounted } from 'vue';
 
 const props = defineProps({
