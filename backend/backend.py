@@ -1,10 +1,10 @@
 import data
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+# from flask_cors import CORS
 
 app = Flask(__name__)
 # 全局启用 CORS
-CORS(app)
+# CORS(app)
 
 @app.route('/api/borad/<int:page>/<int:page_size>', methods=['GET'])
 def get_data(page, page_size):
@@ -24,4 +24,5 @@ def get_dh():
 
 
 if __name__ == '__main__':
-    app.run(port=8080, debug=True)
+    # app.run(port=8080, debug=True)
+    app.run(port=52000, debug=True)
