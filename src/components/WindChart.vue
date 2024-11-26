@@ -4,7 +4,6 @@
 
 <script setup>
 import * as echarts from 'echarts';
-import { da } from 'element-plus/es/locales.mjs';
 import { onMounted } from 'vue';
 
 const props = defineProps({
@@ -59,9 +58,43 @@ const option = {
     text: props.title,
     textStyle: {
       color: '#ffffff',
-      fontSize: 24,
+      // fontSize: 24,
     },
   },
+  media: [
+    {
+      query: {
+        minWidth: 768, // 屏幕宽度大于等于 768px 时应用
+      },
+      option: {
+        title: {
+          textStyle: {
+            fontSize: 30, // 在大屏幕上使用更大的字体
+          },
+        },
+        grid: {
+          top: '22%',
+          bottom: '10%',
+        },
+      },
+    },
+    {
+      query: {
+        maxWidth: 768, // 屏幕宽度小于 768px 时应用
+      },
+      option: {
+        title: {
+          textStyle: {
+            fontSize: 15, // 在小屏幕上使用更小的字体
+          },
+        },
+        grid: {
+          top: '12%',
+          bottom: '5%',
+        },
+      },
+    },
+  ],
   tooltip: {
     trigger: 'axis',
     formatter: (params) => {
@@ -69,10 +102,10 @@ const option = {
       return `${params[0].name}<br />风速：${params[0].value}<br />风向：${props.data[index].fengxiang}`;
     },
   },
-  grid: {
-    top: '25%',
-    bottom: '10%',
-  },
+  // grid: {
+  //   top: '20%',
+  //   bottom: '10%',
+  // },
   legend: {
     data: ['风速'],
     textStyle: {
@@ -98,6 +131,12 @@ const option = {
       min: 0,
       max: 5,
       position: 'left',
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: colors[0],
+        },
+      },
     },
   ],
   server: [],
@@ -111,6 +150,9 @@ onMounted(() => {
       name: '风速',
       type: 'line',
       data: props.data.map((item) => item.fengsu),
+      itemStyle: {
+        color: colors[0],
+      },
       yAxisIndex: 0,
     },
   ];
@@ -160,6 +202,9 @@ watch(
           name: '风速',
           type: 'line',
           data: newVal.map((item) => item.fengsu),
+          itemStyle: {
+            color: colors[0],
+          },
           yAxisIndex: 0,
         },
       ];

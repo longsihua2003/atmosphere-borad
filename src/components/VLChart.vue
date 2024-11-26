@@ -58,19 +58,53 @@ const option = {
     text: props.title,
     textStyle: {
       color: '#ffffff',
-      fontSize: 24,
+      // fontSize: 24,
     },
   },
+  media: [
+    {
+      query: {
+        minWidth: 768, // 屏幕宽度大于等于 768px 时应用
+      },
+      option: {
+        title: {
+          textStyle: {
+            fontSize: 30, // 在大屏幕上使用更大的字体
+          },
+        },
+        grid: {
+          top: '22%',
+          bottom: '10%',
+        },
+      },
+    },
+    {
+      query: {
+        maxWidth: 768, // 屏幕宽度小于 768px 时应用
+      },
+      option: {
+        title: {
+          textStyle: {
+            fontSize: 15, // 在小屏幕上使用更小的字体
+          },
+        },
+        grid: {
+          top: '12%',
+          bottom: '5%',
+        },
+      },
+    },
+  ],
   tooltip: {
     trigger: 'axis',
     axisPointer: {
       type: 'cross',
     },
   },
-  grid: {
-    top: '25%',
-    bottom: '10%',
-  },
+  // grid: {
+  //   top: '20%',
+  //   bottom: '10%',
+  // },
   legend: {
     data: ['能见度', '光强'],
     textStyle: {

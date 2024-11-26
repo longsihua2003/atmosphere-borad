@@ -1,10 +1,11 @@
 <template>
-  <div ref="chartsDom" class="w-full h-full"></div>
+  <div ref="chartsDom" class="w-full h-full relative">
+    <div class="absolute l-0 t-0">{{ title }}</div>
+  </div>
 </template>
 
 <script setup>
 import * as echarts from 'echarts';
-import { it } from 'element-plus/es/locales.mjs';
 import { onMounted } from 'vue';
 
 const props = defineProps({
@@ -59,19 +60,53 @@ const option = {
     text: props.title,
     textStyle: {
       color: '#ffffff',
-      fontSize: 30,
+      // fontSize: 30,
     },
   },
+  media: [
+    {
+      query: {
+        minWidth: 768, // 屏幕宽度大于等于 768px 时应用
+      },
+      option: {
+        title: {
+          textStyle: {
+            fontSize: 30, // 在大屏幕上使用更大的字体
+          },
+        },
+        grid: {
+          top: '22%',
+          bottom: '10%',
+        },
+      },
+    },
+    {
+      query: {
+        maxWidth: 768, // 屏幕宽度小于 768px 时应用
+      },
+      option: {
+        title: {
+          textStyle: {
+            fontSize: 15, // 在小屏幕上使用更小的字体
+          },
+        },
+        grid: {
+          top: '12%',
+          bottom: '5%',
+        },
+      },
+    },
+  ],
   tooltip: {
     trigger: 'axis',
     axisPointer: {
       type: 'cross',
     },
   },
-  grid: {
-    top: '25%',
-    bottom: '10%',
-  },
+  // grid: {
+  //   top: '22%',
+  //   bottom: '10%',
+  // },
   legend: {
     data: ['电流', '电压'],
     textStyle: {

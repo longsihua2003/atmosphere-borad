@@ -86,7 +86,7 @@ const time = () => {
   line-height: 46px;
 
   .title-text {
-    @apply text-3xl font-bold;
+    @apply lg:text-[1.5vw] sm:text-[3vw] font-bold;
     // font-size: 38px;
     font-weight: 900;
     letter-spacing: 6px;
@@ -95,11 +95,11 @@ const time = () => {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  @media (max-width: 768px) {
-    .title-text {
-      @apply text-xl;
-      // font-size: 24px;
-    }
-  }
+  // @media (max-width: 768px) {
+  //   .title-text {
+  //     @apply text-xl;
+  //     // font-size: 24px;
+  //   }
+  // }
 }
 </style>
