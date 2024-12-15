@@ -76,6 +76,9 @@ const option = {
           top: '22%',
           bottom: '10%',
         },
+        legend: {
+          left: 'center',
+        },
       },
     },
     {
@@ -90,8 +93,21 @@ const option = {
         },
         grid: {
           top: '12%',
-          bottom: '5%',
+          bottom: '10%',
+          left: '15%',
+          right: '15%',
         },
+        legend: {
+          left: 'right',
+        },
+        yAxis: [
+          {
+            name: '',
+          },
+          {
+            name: '',
+          },
+        ],
       },
     },
   ],

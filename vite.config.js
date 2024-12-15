@@ -52,6 +52,9 @@ export default ({ mode }) => {
           math: 'strict',
           javascriptEnabled: true,
         },
+        scss: {
+          silenceDeprecations: ['legacy-js-api'],
+        },
       },
     },
     optimizeDeps: {
@@ -70,8 +73,8 @@ export default ({ mode }) => {
       // 自定义代理规则
       proxy: {
         '/api': {
-          // target: 'http://47.109.190.25:52008',
-          target: 'http://127.0.0.1:8080/api',
+          target: 'http://localhost:52008',
+          // target: 'http://127.0.0.1:52000/api',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         },

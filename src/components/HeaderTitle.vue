@@ -10,22 +10,30 @@
         </div>
       </div>
       <div class="timers">
-        {{ time() }}
+        {{ time }}
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 defineProps({
   title: String,
 });
 
-const time = () => {
+// const time = () => {
+//   const date = new Date();
+//   // YYYY-MM-DD HH:mm:ss
+//   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+// };
+const time = ref('');
+setInterval(() => {
   const date = new Date();
-  // YYYY-MM-DD HH:mm:ss
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-};
+  // YYYY-MM-DD HH:mm:ss 个位补0
+  time.value = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+  // time.value = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+}, 1000);
 // console.log(time())
 </script>
 
@@ -75,6 +83,12 @@ const time = () => {
     display: flex;
     align-items: center;
   }
+  @media (max-width: 768px) {
+    .timers {
+      // font-size: 14px;
+      display: none;
+    }
+  }
 }
 .title {
   position: relative;
@@ -86,7 +100,7 @@ const time = () => {
   line-height: 46px;
 
   .title-text {
-    @apply lg:text-[1.5vw] sm:text-[3vw] font-bold;
+    @apply text-[1.5vw] font-bold;
     // font-size: 38px;
     font-weight: 900;
     letter-spacing: 6px;
@@ -95,11 +109,11 @@ const time = () => {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  // @media (max-width: 768px) {
-  //   .title-text {
-  //     @apply text-xl;
-  //     // font-size: 24px;
-  //   }
-  // }
+  @media (max-width: 768px) {
+    .title-text {
+      @apply text-[3vw];
+      // font-size: 24px;
+    }
+  }
 }
 </style>
