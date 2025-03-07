@@ -8,7 +8,7 @@ import Components from 'unplugin-vue-components/vite';
 import WindiCSS from 'vite-plugin-windicss';
 
 export default ({ mode }) => {
-  const { VITE_PORT, VITE_BASE_URL } = loadEnv(mode, process.cwd());
+  const { VITE_PORT, VITE_BASE_URL, VITE_PROXY_DOMAIN_REAL } = loadEnv(mode, process.cwd());
 
   return defineConfig({
     base: VITE_BASE_URL,
@@ -73,8 +73,8 @@ export default ({ mode }) => {
       // 自定义代理规则
       proxy: {
         '/api': {
-          target: 'http://localhost:52008',
-          // target: 'http://127.0.0.1:52000/api',
+          // target: 'http://localhost:52008',
+          target: VITE_PROXY_DOMAIN_REAL,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         },

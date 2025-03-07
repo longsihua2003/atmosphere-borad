@@ -34,6 +34,7 @@ export const getData = async (start_time, end_time) => {
       start_time,
       end_time,
     });
+    console.log(res);
     return res;
   } catch (error) {
     console.error(error);

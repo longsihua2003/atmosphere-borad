@@ -41,7 +41,7 @@ def get_data(start_time, end_time, page, page_size):
     print(params)
     # 发送请求
     response = requests.get(url, headers=headers, params=params)
-    # print(response.text)
+    print(response.text)
     return response
 
 if __name__ == '__main__':

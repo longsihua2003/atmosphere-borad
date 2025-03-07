@@ -1,3 +1,8 @@
+/*
+example:
+  axios 以及封装好的接口
+*/
+
 import { post } from '@/utils/request';
 
 export default class User {

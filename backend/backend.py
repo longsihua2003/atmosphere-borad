@@ -22,7 +22,9 @@ def get_dh():
     # 测试数据
     return jsonify({'data': 'dh'})
 
+def main():
+    app.run(port=52000, debug=True)
 
 if __name__ == '__main__':
     # app.run(port=8080, debug=True)
-    app.run(port=52000, debug=True)
+    main()
